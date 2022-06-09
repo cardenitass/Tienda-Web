@@ -29,7 +29,7 @@ public class PersonaService implements IPersonaService {
 
     @Override
     public void delete(long id) {
-         personaRepository.deleteById(id); 
+        personaRepository.deleteById(id);
     }
 
 }
