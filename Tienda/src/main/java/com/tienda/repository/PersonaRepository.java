@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface PersonaRepository extends CrudRepository<Persona, Long> {
+    // El nombre esta actuando como username
       Persona findByNombre (String nombre); 
 }

@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     private UserService userDetailsService;
     
+     // El metodo que usaremos para desencriptar va a ser de tipo BCryptPasswordEncoder
     @Bean 
     public BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -41,10 +42,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         return daoAuthenticationProvider;
     }
     
-//    @Bean
-//    public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
-//        return new AppAuthenticationSuccessHandler();
-//    }
+    @Bean
+    public AuthenticationSuccessHandler appAuthenticationSuccessHandler() {
+        return new AppAuthenticationSuccessHandler();
+    }
     
     public SecurityConfig(UserService userPrincipalDetailsService){
         this.userDetailsService = userPrincipalDetailsService;
@@ -55,17 +56,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
         auth.authenticationProvider(authenticationProvider());       
     }
     
+    // El siguiente metodo funciona para hacer la autenticacion del usuario
+    @Override
     protected void configure(HttpSecurity http) throws Exception{
-        
+        // Le damos permiso de ir a /personas y login si tiene el permiso de ADMIN
         http.authorizeRequests()
-                .antMatchers("/personas", "login")
+                .antMatchers("/persona", "login")
                 .hasRole("ADMIN")
                 .antMatchers("/personaN", "/persona", "/", "login")
                 .hasAnyRole("USER", "VENDOR", "ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/login").permitAll().defaultSuccessUrl("/personas",true);
+                .loginPage("/login").permitAll().defaultSuccessUrl("/persona",true);
                      
     }
                     

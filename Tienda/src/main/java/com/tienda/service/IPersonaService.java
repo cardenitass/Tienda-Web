@@ -15,5 +15,6 @@ public interface IPersonaService {
 
     public void delete(long id);
     
+    //Devolver una persona por el nombre
     public Persona findByNombre (String nombre); 
 }

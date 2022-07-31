@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
  * @author David
  */
 
+/* El UserDetailsService toma en cuenta SpringSecurity y nos ayuda a validar si 
+un usuario existe o no y si se puede loguear. */
 @Service
 public class UserService implements UserDetailsService {
     

@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  * @author David
  */
+
+// El UserDetails nos permite guardar la informacion del usuario como tal pero no se usa para Spring Security.
 public class Userprincipal implements UserDetails {
     private Persona persona; 
     
@@ -22,6 +24,9 @@ public class Userprincipal implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        
+       /*  Se crea una lista de tipo GrantedAuthority que es un permiso que le
+         permite al usuario lo que puede o no hacer. */
       List<GrantedAuthority> authorities = new ArrayList<>();
       
       
@@ -33,6 +38,8 @@ public class Userprincipal implements UserDetails {
       });
       
       // Extract list of roles (ROLE_name)
+      /* El permiso GrantedAuthorty solo permite que se le ponga ROLE_ para
+      identificar si es un role como tal. */
        this.persona.getRoleList().forEach(r -> {
           GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + r); 
           authorities.add(authority); 
@@ -64,7 +71,8 @@ public class Userprincipal implements UserDetails {
     public boolean isCredentialsNonExpired() {
       return true; 
     }
-
+    
+    // Para saber si esta activo o inactivo
     @Override
     public boolean isEnabled() {
         return this.persona.getActive()==1;  
